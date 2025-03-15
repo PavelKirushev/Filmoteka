@@ -56,6 +56,7 @@ kotlin {
             implementation(libs.androidx.activity.compose)
         }
         commonMain.dependencies {
+            implementation(libs.navigation.compose)
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)
@@ -97,5 +98,7 @@ android {
 
 dependencies {
     debugImplementation(compose.uiTooling)
+    implementation(project(":feature:film"))
+    implementation(project(":feature:search"))
 }
 

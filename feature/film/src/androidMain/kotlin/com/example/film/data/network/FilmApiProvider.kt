@@ -3,7 +3,7 @@ package com.example.film.data.network
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object RetrofitHelper {
+object FilmApiProvider {
     val baseUrl = "https://kinopoiskapiunofficial.tech/"
 
     val filmApi: FilmApi by lazy {
