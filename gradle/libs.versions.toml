@@ -10,6 +10,7 @@ coilCompose = "3.1.0"
 compose-multiplatform = "1.7.0"
 converterGson = "2.11.0"
 coreKtx = "1.12.0"
+koinCore = "3.2.0"
 kotlin = "2.1.0"
 lifecycleRuntimeCompose = "2.8.7"
 material = "1.7.8"
@@ -35,6 +36,9 @@ converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koinCore" }
+koin-core = { module = "io.insert-koin:koin-core", version.ref = "koinCore" }
+koin-test = { module = "io.insert-koin:koin-test", version.ref = "koinCore" }
 lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycleRuntimeCompose" }
 material = { module = "androidx.compose.material:material", version.ref = "material" }
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }

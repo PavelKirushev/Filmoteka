@@ -5,7 +5,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.film.presentation.FilmScreen
-import com.example.film.presentation.FilmView
 import com.example.film.presentation.FilmViewModel
 import com.example.search.presentation.mainsearchwindow.MainSearchScreen
 import com.example.search.presentation.mainsearchwindow.MainSearchViewModel
