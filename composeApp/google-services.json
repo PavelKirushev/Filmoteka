@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "213923853406",
+    "firebase_url": "https://mess-7f530-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "mess-7f530",
+    "storage_bucket": "mess-7f530.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:213923853406:android:8d7bad46e16738246c70cf",
+        "android_client_info": {
+          "package_name": "org.example.filmoteka"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvt1uIDquLlAZpM3in25AUmzHmnnupRF8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

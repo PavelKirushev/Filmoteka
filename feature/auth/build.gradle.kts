@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    id("com.google.gms.google-services")
 }
 
 kotlin {
@@ -50,35 +51,61 @@ kotlin {
     }
 
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                // Общие зависимости для всех платформ
-            }
+
+        androidMain.dependencies {
+            implementation(compose.preview)
+            implementation(libs.androidx.activity.compose)
+
+            //Retrofit
+            implementation(libs.retrofit)
+            implementation(libs.converter.gson)
+
+            //Coil
+            implementation(libs.coil.compose)
+            implementation(libs.coil.network.okhttp)
         }
 
-        val androidMain by getting {
+        commonMain.dependencies {
             dependencies {
-                implementation(libs.androidx.core.ktx.v1120)
-                implementation(libs.androidx.ui) // Замените на актуальную версию
-                implementation(libs.material) // Замените на актуальную версию
-                implementation(libs.androidx.ui.tooling.preview) // Замените на актуальную версию
-                implementation(libs.androidx.activity.compose.v160) // Замените на актуальную версию
+                implementation(libs.navigation.compose)
+                implementation(compose.runtime)
+                implementation(compose.foundation)
+                implementation(compose.material)
+                implementation(compose.ui)
+                implementation(compose.components.resources)
+                implementation(compose.components.uiToolingPreview)
+                implementation(libs.androidx.runtime)
+                implementation(libs.androidx.lifecycle.viewmodel)
+                implementation(libs.androidx.lifecycle.runtime.compose)
+                implementation(libs.lifecycle.runtime.compose)
+                implementation(libs.koin.core)
+                implementation(libs.koin.test)
+                implementation(libs.koin.android)
+                implementation(platform(libs.firebase.bom))
+                implementation(libs.firebase.auth)
+
             }
         }
     }
 }
 
 android {
-    namespace = "org.example.auth"
-    compileSdk = libs.versions.android.compileSdk.get().toInt() // Укажите вашу версию compileSdk
+    namespace = "com.example.auth"
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = libs.versions.android.minSdk.get().toInt() // Укажите минимальную версию SDK
-        targetSdk = libs.versions.android.targetSdk.get().toInt() // Укажите целевую версию SDK
+//        applicationId = "org.example.filmoteka"
+        minSdk = libs.versions.android.minSdk.get().toInt()
+        targetSdk = libs.versions.android.targetSdk.get().toInt()
+//        versionCode = 1
+//        versionName = "1.0"
     }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+}
+dependencies {
+    implementation(libs.androidx.activity)
 }

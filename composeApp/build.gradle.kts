@@ -100,5 +100,6 @@ dependencies {
     debugImplementation(compose.uiTooling)
     implementation(project(":feature:film"))
     implementation(project(":feature:search"))
+    implementation(project(":feature:auth"))
 }
 
