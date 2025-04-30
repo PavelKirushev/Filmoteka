@@ -15,9 +15,6 @@ import coil3.compose.AsyncImage
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 
-class FilmView : ComponentActivity() {
-}
-
 @Composable
 fun FilmScreen(viewModel: FilmViewModel, id: Int) {
     val filmState by viewModel.film.collectAsState()

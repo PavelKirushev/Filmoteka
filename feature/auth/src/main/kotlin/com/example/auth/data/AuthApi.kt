@@ -1,7 +1,7 @@
 package com.example.auth.data
 
 import com.example.auth.data.models.Token
-import com.example.auth.data.models.User
+import com.example.auth.domain.User
 import com.example.auth.data.models.UserInfo
 import retrofit2.Response
 import retrofit2.http.Body

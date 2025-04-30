@@ -97,6 +97,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.material3.android)
     debugImplementation(compose.uiTooling)
     implementation(project(":feature:film"))
     implementation(project(":feature:search"))

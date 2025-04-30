@@ -1,6 +1,7 @@
 package com.example.auth.data
 
-import com.example.auth.data.models.User
+import android.util.Log
+import com.example.auth.domain.User
 import com.example.auth.data.models.UserInfo
 import com.example.auth.domain.AuthRepository
 
@@ -10,7 +11,7 @@ class AuthRepositoryImpl(
     override suspend fun getUser(login: String, password: String): User {
         val token = authApi.login(UserInfo(login, password))
         val response = token.body()?.let {
-            authApi.getUser(it.token)
+            authApi.getUser("Bearer " + it.token)
         }
         if (response != null) {
             return response.body() ?: throw Exception("User not found")
