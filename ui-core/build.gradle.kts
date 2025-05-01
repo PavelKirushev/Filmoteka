@@ -39,7 +39,6 @@ kotlin {
                 outputFileName = "composeApp.js"
                 devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
                     static = (static ?: mutableListOf()).apply {
-                        // Serve sources to debug inside browser
                         add(rootDirPath)
                         add(projectDirPath)
                     }
@@ -54,14 +53,6 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
-
-            //Retrofit
-            implementation(libs.retrofit)
-            implementation(libs.converter.gson)
-
-            //Coil
-            implementation(libs.coil.compose)
-            implementation(libs.coil.network.okhttp)
         }
 
         commonMain.dependencies {
@@ -87,15 +78,12 @@ kotlin {
 }
 
 android {
-    namespace = "com.example.film"
+    namespace = "com.example.ui_core"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-//        applicationId = "org.example.filmoteka"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-//        versionCode = 1
-//        versionName = "1.0"
     }
 
     compileOptions {
@@ -105,5 +93,5 @@ android {
 }
 dependencies {
     implementation(libs.androidx.activity)
-    implementation(project(":ui-core"))
+    implementation(libs.androidx.ui.text.google.fonts)
 }

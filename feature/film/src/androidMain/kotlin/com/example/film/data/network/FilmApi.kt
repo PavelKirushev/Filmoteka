@@ -1,6 +1,5 @@
 package com.example.film.data.network
 
-import com.example.film.data.FilmDetails
 import com.example.film.data.network.models.Film
 import retrofit2.Response
 import retrofit2.http.GET

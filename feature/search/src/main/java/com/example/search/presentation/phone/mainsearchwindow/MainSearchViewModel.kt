@@ -1,8 +1,8 @@
-package com.example.search.presentation.mainsearchwindow
+package com.example.search.presentation.phone.mainsearchwindow
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.search.data.SearchDetails
+import com.example.search.data.modelsfordomain.SearchDetails
 import com.example.search.domain.SearchRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

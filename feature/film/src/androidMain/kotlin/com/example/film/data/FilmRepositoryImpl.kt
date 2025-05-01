@@ -1,6 +1,7 @@
 package com.example.film.data
 
 import com.example.film.data.mappers.toFilmDetails
+import com.example.film.data.modelsfordomain.FilmDetails
 import com.example.film.data.network.FilmApi
 import com.example.film.domain.FilmRepository
 

@@ -1,8 +1,8 @@
-package com.example.film.presentation
+package com.example.film.presentation.phone
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.film.data.FilmDetails
+import com.example.film.data.modelsfordomain.FilmDetails
 import com.example.film.domain.FilmRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

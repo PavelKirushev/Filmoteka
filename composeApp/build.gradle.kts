@@ -59,12 +59,13 @@ kotlin {
             implementation(libs.navigation.compose)
             implementation(compose.runtime)
             implementation(compose.foundation)
-            implementation(compose.material)
+            implementation(compose.material3)
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
+            implementation(libs.accompanist.systemuicontroller)
         }
     }
 }
@@ -97,10 +98,10 @@ android {
 }
 
 dependencies {
-    implementation(libs.material3.android)
     debugImplementation(compose.uiTooling)
     implementation(project(":feature:film"))
     implementation(project(":feature:search"))
     implementation(project(":feature:auth"))
+    implementation(project(":ui-core"))
 }
 

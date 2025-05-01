@@ -8,7 +8,6 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
-    id("com.google.gms.google-services")
 }
 
 kotlin {
@@ -70,7 +69,7 @@ kotlin {
                 implementation(libs.navigation.compose)
                 implementation(compose.runtime)
                 implementation(compose.foundation)
-                implementation(compose.material)
+                implementation(compose.material3)
                 implementation(compose.ui)
                 implementation(compose.components.resources)
                 implementation(compose.components.uiToolingPreview)
@@ -81,8 +80,6 @@ kotlin {
                 implementation(libs.koin.core)
                 implementation(libs.koin.test)
                 implementation(libs.koin.android)
-                implementation(platform(libs.firebase.bom))
-                implementation(libs.firebase.auth)
 
             }
         }
@@ -108,4 +105,6 @@ android {
 }
 dependencies {
     implementation(libs.androidx.activity)
+    implementation(libs.material3.android)
+    implementation(project(":ui-core"))
 }

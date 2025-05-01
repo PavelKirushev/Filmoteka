@@ -1,6 +1,6 @@
-package com.example.search.presentation
+package com.example.search.presentation.phone
 
-import androidx.compose.foundation.clickable
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,15 +17,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil3.compose.AsyncImage
 import com.example.example.Films
+import com.example.search.data.modelsfordomain.FilmDetails
 
 @Composable
-fun FilmCard(film: Films, controller: NavHostController) {
+fun FilmCard(film: FilmDetails, controller: NavHostController) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -33,15 +33,18 @@ fun FilmCard(film: Films, controller: NavHostController) {
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         onClick = {
             controller.navigate("details/" + film.filmId)
-        }
+        },
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+            contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+        )
     ) {
         Row(
             modifier = Modifier.padding(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Постер фильма
             AsyncImage(
-                model = film.posterUrlPreview ?: film.posterUrl,
+                model = film.posterUrl ?: film.posterUrlPreview,
                 contentDescription = "Постер фильма ${film.nameRu}",
                 modifier = Modifier
                     .size(60.dp)
@@ -49,29 +52,23 @@ fun FilmCard(film: Films, controller: NavHostController) {
                 contentScale = ContentScale.Crop,
             )
 
-            // Информация о фильме
             Column(
                 modifier = Modifier
                     .padding(start = 16.dp)
                     .weight(1f)
             ) {
-                // Название и год
                 Text(
                     text = "${film.nameRu ?: "Без названия"} (${film.year ?: "год не указан"})",
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold
                 )
-
-                // Рейтинг
-                film.rating?.let {
+                if (film.rating.toString() != "null") {
+                    Log.d("rating", film.rating.toString())
                     Text(
-                        text = "Рейтинг: $it (${film.ratingVoteCount ?: 0} оценок)",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = Color.Gray
+                        text = "Рейтинг: ${film.rating} (${film.ratingVoteCount ?: 0} оценок)",
+                        style = MaterialTheme.typography.bodyMedium.copy(MaterialTheme.colorScheme.onTertiaryContainer)
                     )
                 }
 
-                // Жанры
+
                 if (film.genres.isNotEmpty()) {
                     Text(
                         text = "Жанры: ${film.genres.joinToString { it.genre ?: "" }}",
@@ -81,7 +78,6 @@ fun FilmCard(film: Films, controller: NavHostController) {
                     )
                 }
 
-                // Страны
                 if (film.countries.isNotEmpty()) {
                     Text(
                         text = "Страны: ${film.countries.joinToString { it.country ?: "" }}",
@@ -91,12 +87,10 @@ fun FilmCard(film: Films, controller: NavHostController) {
                     )
                 }
 
-                // Тип (фильм/сериал и т.д.)
                 film.type?.let {
                     Text(
-                        text = it.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
-                        style = MaterialTheme.typography.labelSmall,
-                        color = Color.Blue
+                        text = if (it == "FILM") "Фильм" else "Сериал",
+                        style = MaterialTheme.typography.bodySmall,
                     )
                 }
             }

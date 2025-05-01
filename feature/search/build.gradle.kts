@@ -69,7 +69,7 @@ kotlin {
 
                 implementation(compose.runtime)
                 implementation(compose.foundation)
-                implementation(compose.material)
+                implementation(compose.material3)
                 implementation(compose.ui)
                 implementation(compose.components.resources)
                 implementation(compose.components.uiToolingPreview)
@@ -104,4 +104,5 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.material3.android)
     implementation(project(":feature:film"))
+    implementation(project(":ui-core"))
 }

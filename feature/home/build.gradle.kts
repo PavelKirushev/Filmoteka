@@ -60,7 +60,7 @@ kotlin {
             dependencies {
                 implementation(libs.androidx.core.ktx.v1120)
                 implementation(libs.androidx.ui) // Замените на актуальную версию
-                implementation(libs.material) // Замените на актуальную версию
+//                implementation(libs.material3) // Замените на актуальную версию
                 implementation(libs.androidx.ui.tooling.preview) // Замените на актуальную версию
                 implementation(libs.androidx.activity.compose.v160) // Замените на актуальную версию
             }
@@ -81,4 +81,8 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+}
+
+dependencies {
+    implementation(project(":ui-core"))
 }
