@@ -18,17 +18,6 @@ kotlin {
         }
     }
 
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
-            baseName = "ComposeApp"
-            isStatic = true
-        }
-    }
-
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         moduleName = "composeApp"
@@ -53,32 +42,32 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+            implementation(libs.androidx.runtime)
+            implementation(libs.androidx.lifecycle.viewmodel)
+            implementation(libs.androidx.lifecycle.runtime.compose)
+            implementation(libs.androidx.ui.text.google.fonts)
+            implementation(libs.androidx.ui.graphics.android)
+            implementation(libs.koin.core)
+            implementation(libs.koin.test)
+            implementation(libs.koin.android)
+
         }
 
         commonMain.dependencies {
-            dependencies {
-                implementation(libs.navigation.compose)
-                implementation(compose.runtime)
-                implementation(compose.foundation)
-                implementation(compose.material3)
-                implementation(compose.ui)
-                implementation(compose.components.resources)
-                implementation(compose.components.uiToolingPreview)
-                implementation(libs.androidx.runtime)
-                implementation(libs.androidx.lifecycle.viewmodel)
-                implementation(libs.androidx.lifecycle.runtime.compose)
-                implementation(libs.lifecycle.runtime.compose)
-                implementation(libs.koin.core)
-                implementation(libs.koin.test)
-                implementation(libs.koin.android)
+            implementation(libs.navigation.compose)
+            implementation(compose.runtime)
+            implementation(compose.foundation)
+            implementation(compose.material3)
+            implementation(compose.ui)
+            implementation(compose.components.resources)
+            implementation(compose.components.uiToolingPreview)
 
-            }
         }
     }
 }
 
 android {
-    namespace = "com.example.ui_core"
+    namespace = "com.example.film"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
@@ -90,8 +79,4 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-}
-dependencies {
-    implementation(libs.androidx.activity)
-    implementation(libs.androidx.ui.text.google.fonts)
 }

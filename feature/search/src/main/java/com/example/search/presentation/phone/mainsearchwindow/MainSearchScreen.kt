@@ -42,7 +42,7 @@ fun MainSearchScreen(viewModel: MainSearchViewModel, controller: NavHostControll
             Icon(
                 androidx.compose.ui.res.painterResource(R.drawable.search_icon),
                 contentDescription = "Search",
-                tint = MaterialTheme.colorScheme.primary,
+                tint = MaterialTheme.colorScheme.onPrimaryContainer,
             )
             SimpleTextField(
                 onValueChange = { newText ->

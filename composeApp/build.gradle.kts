@@ -18,17 +18,6 @@ kotlin {
         }
     }
     
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
-            baseName = "ComposeApp"
-            isStatic = true
-        }
-    }
-    
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         moduleName = "composeApp"
@@ -54,6 +43,7 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+            implementation(libs.accompanist.systemuicontroller)
         }
         commonMain.dependencies {
             implementation(libs.navigation.compose)
@@ -65,7 +55,15 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
-            implementation(libs.accompanist.systemuicontroller)
+
+            implementation(project(":feature:film"))
+            implementation(project(":feature:search"))
+            implementation(project(":feature:auth"))
+            implementation(project(":ui-core"))
+        }
+        wasmJsMain.dependencies {
+            implementation(libs.ktor.client.core)
+
         }
     }
 }
@@ -95,13 +93,5 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-}
-
-dependencies {
-    debugImplementation(compose.uiTooling)
-    implementation(project(":feature:film"))
-    implementation(project(":feature:search"))
-    implementation(project(":feature:auth"))
-    implementation(project(":ui-core"))
 }
 

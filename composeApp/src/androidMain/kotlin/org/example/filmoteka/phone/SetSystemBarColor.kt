@@ -4,22 +4,21 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
-fun SetSystemBarsColor() {
+fun SetSystemBarsColor(isDarkTheme: Boolean) {
     val systemUiController = rememberSystemUiController()
-    val useDarkIcons = !isSystemInDarkTheme()
-    val statusBarColor = MaterialTheme.colorScheme.onPrimaryContainer
-    val navigationBarColor = MaterialTheme.colorScheme.primaryContainer
+    val useDarkIcons = !isDarkTheme
 
     SideEffect {
         systemUiController.setStatusBarColor(
-            color = statusBarColor,
+            color = Color.Transparent,
             darkIcons = useDarkIcons
         )
         systemUiController.setNavigationBarColor(
-            color = navigationBarColor,
+            color = Color.Transparent,
             darkIcons = useDarkIcons
         )
     }

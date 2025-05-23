@@ -7,24 +7,20 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
-import com.example.auth.data.AuthApiProvider
+import com.example.auth.data.network.AuthApiProvider
 import com.example.auth.data.AuthRepositoryImpl
 import com.example.auth.presentation.phone.AuthViewModel
-import com.example.compose.AppTheme
-import com.example.film.data.FilmRepositoryImpl
-import com.example.film.data.network.FilmApiProvider
-import com.example.film.presentation.phone.FilmViewModel
+import com.example.auth.data.FilmRepositoryImpl
+import com.example.auth.data.network.FilmApiProvider
 import com.example.search.data.SearchRepositoryImpl
 import com.example.search.data.network.SearchApiProvider
 import com.example.search.presentation.phone.mainsearchwindow.MainSearchViewModel
-import com.example.ui_core.theme.ThemeViewModel
+import com.example.ui.ThemeViewModel
 import org.example.filmoteka.phone.BottomNavigationBar
 import org.example.filmoteka.phone.SetSystemBarsColor
 
@@ -37,7 +33,7 @@ class MainActivity : ComponentActivity() {
 
         setContent{
             AppTheme (darkTheme = isDarkTheme) {
-                SetSystemBarsColor()
+                SetSystemBarsColor(isDarkTheme)
                 Main(themeViewModel)
             }
 

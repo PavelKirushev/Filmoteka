@@ -20,7 +20,7 @@ import org.example.filmoteka.models.NavBarItems
 
 @Composable
 fun BottomNavigationBar(controller: NavController) {
-    NavigationBar(modifier = Modifier.height(56.dp),
+    NavigationBar(modifier = Modifier.height(70.dp),
         containerColor = MaterialTheme.colorScheme.primaryContainer
     ) {
         val backStackEntry by controller.currentBackStackEntryAsState()
@@ -38,7 +38,7 @@ fun BottomNavigationBar(controller: NavController) {
                 },
                 icon = {
                     Icon(imageVector = navItem.image,
-                        contentDescription = navItem.title,)
+                        contentDescription = navItem.title, )
                 },
                 label = {
                     Text(text = navItem.title,)

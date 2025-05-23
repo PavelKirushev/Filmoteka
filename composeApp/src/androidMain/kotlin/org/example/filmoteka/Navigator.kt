@@ -6,11 +6,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.auth.presentation.phone.AuthScreen
 import com.example.auth.presentation.phone.AuthViewModel
-import com.example.film.presentation.phone.FilmScreen
-import com.example.film.presentation.phone.FilmViewModel
+import com.example.auth.presentation.phone.FilmScreen
 import com.example.search.presentation.phone.mainsearchwindow.MainSearchScreen
 import com.example.search.presentation.phone.mainsearchwindow.MainSearchViewModel
-import com.example.ui_core.theme.ThemeViewModel
+import com.example.ui.ThemeViewModel
 
 @Composable
 fun Navigator(searchViewModel: MainSearchViewModel,
@@ -24,7 +23,7 @@ fun Navigator(searchViewModel: MainSearchViewModel,
         composable("details/{filmId}") {
             val filmId = it.arguments?.getString("filmId")?.toIntOrNull()
             if (filmId != null) {
-                FilmScreen(filmViewModel, filmId)
+                FilmScreen(filmViewModel, filmId, controller)
             }
         }
         composable("authScreen") {
