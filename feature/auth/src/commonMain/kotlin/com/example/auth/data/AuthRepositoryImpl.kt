@@ -8,6 +8,8 @@ import com.example.auth.domain.AuthRepository
 class AuthRepositoryImpl(
     private val authApi: AuthApi
 ): AuthRepository {
-    override suspend fun getUser(login: String, password: String): User = authApi.getUser(login, password)
+    override suspend fun getUser(login: String, password: String): User = authApi.getUser(authApi.login(
+        UserInfo(login, password)
+    ))
     override suspend fun setUser(user: User) = authApi.setUser(user)
 }

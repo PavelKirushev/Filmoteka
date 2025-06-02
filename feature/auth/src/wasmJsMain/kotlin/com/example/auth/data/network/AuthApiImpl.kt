@@ -1,5 +1,6 @@
-package com.example.auth.data.network
+package com.example.film.data.network
 
+import com.example.auth.data.network.AuthApi
 import com.example.auth.domain.models.Token
 import com.example.auth.domain.models.User
 import com.example.auth.domain.models.UserInfo
@@ -40,6 +41,6 @@ class AuthApiImpl() : AuthApi {
         return client.post {
             url("http://10.0.2.2:8080")
             setBody(user)
-        }
+        }.body()
     }
 }

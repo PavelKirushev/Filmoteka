@@ -12,6 +12,8 @@ import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.client.request.url
+import io.ktor.http.ContentType
+import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
@@ -33,14 +35,16 @@ class AuthApiImpl() : AuthApi {
     override suspend fun login(userInfo: UserInfo): Token {
         return client.post {
             url("http://10.0.2.2:8080/login")
+            contentType(ContentType.Application.Json)
             setBody(userInfo)
         }.body()
     }
 
     override suspend fun setUser(user: User) {
         return client.post {
-            url("http://10.0.2.2:8080")
+            url("http://10.0.2.2:8080/users")
+            contentType(ContentType.Application.Json)
             setBody(user)
-        }
+        }.body()
     }
 }

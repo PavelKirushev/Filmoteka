@@ -1,5 +1,6 @@
 package org.example.filmoteka
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -14,15 +15,18 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.example.auth.data.network.AuthApiProvider
 import com.example.auth.data.AuthRepositoryImpl
-import com.example.auth.presentation.phone.AuthViewModel
-import com.example.auth.data.FilmRepositoryImpl
-import com.example.auth.data.network.FilmApiProvider
+import com.example.auth.presentation.AuthViewModel
+import com.example.compose.AppTheme
+import com.example.film.data.FilmRepositoryImpl
+import com.example.film.data.network.FilmApiProvider
+import com.example.film.presentation.FilmViewModel
 import com.example.search.data.SearchRepositoryImpl
 import com.example.search.data.network.SearchApiProvider
-import com.example.search.presentation.phone.mainsearchwindow.MainSearchViewModel
+import com.example.search.presentation.SearchViewModel
 import com.example.ui.ThemeViewModel
 import org.example.filmoteka.phone.BottomNavigationBar
 import org.example.filmoteka.phone.SetSystemBarsColor
+import org.jetbrains.compose.resources.getString
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,24 +38,20 @@ class MainActivity : ComponentActivity() {
         setContent{
             AppTheme (darkTheme = isDarkTheme) {
                 SetSystemBarsColor(isDarkTheme)
-                Main(themeViewModel)
+                Main(themeViewModel, this)
             }
 
         }
-
     }
 }
 
 @Composable
-fun Main(themeViewModel: ThemeViewModel) {
-    val filmRetrofitClient = FilmApiProvider.filmApi
-    val filmViewModel = FilmViewModel(FilmRepositoryImpl(filmRetrofitClient))
+fun Main(themeViewModel: ThemeViewModel, context: Context) {
+    val apiKey = context.getString(R.string.API_KEY)
 
-    val searchRetrofitClient = SearchApiProvider.searchApi
-    val searchViewModel = MainSearchViewModel(SearchRepositoryImpl(searchRetrofitClient))
-
-    val authRetrofitClient = AuthApiProvider.authApi
-    val authViewModel = AuthViewModel(AuthRepositoryImpl(authRetrofitClient))
+    val filmViewModel = FilmViewModel(FilmRepositoryImpl(FilmApiProvider.create(apiKey)))
+    val searchViewModel = SearchViewModel(SearchRepositoryImpl(SearchApiProvider.create(apiKey)))
+    val authViewModel = AuthViewModel(AuthRepositoryImpl(AuthApiProvider.create()))
 
 
     val controller = rememberNavController()

@@ -3,10 +3,10 @@ package org.example.filmoteka
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.window.ComposeViewport
 import androidx.navigation.compose.rememberNavController
-import com.example.auth.data.FilmRepositoryImpl
-import com.example.auth.data.network.FilmApiProvider
-import com.example.auth.presentation.FilmScreen
-import com.example.auth.presentation.FilmViewModel
+import com.example.film.data.FilmRepositoryImpl
+import com.example.film.data.network.FilmApiProvider
+import com.example.film.presentation.FilmScreen
+import com.example.film.presentation.FilmViewModel
 import kotlinx.browser.document
 
 @OptIn(ExperimentalComposeUiApi::class)

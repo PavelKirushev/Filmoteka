@@ -1,5 +1,7 @@
 package com.example.auth.data.network
 
 expect class AuthApiProvider() {
-    fun create(apiKey: String): AuthApi
+    companion object {
+        fun create(): AuthApi
+    }
 }

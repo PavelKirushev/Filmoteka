@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    id("kotlinx-serialization")
 }
 
 kotlin {
@@ -20,15 +21,14 @@ kotlin {
 
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
-        moduleName = "composeApp"
+        moduleName = "search"
         browser {
             val rootDirPath = project.rootDir.path
             val projectDirPath = project.projectDir.path
             commonWebpackConfig {
-                outputFileName = "composeApp.js"
+                outputFileName = "search.js"
                 devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
                     static = (static ?: mutableListOf()).apply {
-                        // Serve sources to debug inside browser
                         add(rootDirPath)
                         add(projectDirPath)
                     }
@@ -39,9 +39,12 @@ kotlin {
     }
 
     sourceSets {
+
         androidMain.dependencies {
-            implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+            implementation(libs.androidx.runtime)
+            implementation(libs.androidx.lifecycle.viewmodel)
+            implementation(libs.lifecycle.runtime.compose) // жизненный цикл
 
             //Retrofit
             implementation(libs.retrofit)
@@ -50,24 +53,38 @@ kotlin {
             //Coil
             implementation(libs.coil.compose)
             implementation(libs.coil.network.okhttp)
+
+            //Koin
+            implementation(libs.koin.android)
+
+            //Ktor client
+            implementation(libs.ktor.client.android)
+            implementation(libs.ktor.client.content.negotiation)
+
+            implementation(project(":ui-core"))
         }
 
         commonMain.dependencies {
-            dependencies {
-                implementation(libs.navigation.compose)
+            implementation(libs.navigation.compose) // навигация
+            implementation(compose.runtime) // реактивность и управление состоянием (remember, mutableStateOf)
+            implementation(compose.foundation) // базовый UI
+            implementation(compose.material3) // готовые UI компоненты (Button, Card...)
+            implementation(compose.ui) // ядро компоуса для работы с графикой и вводом (dp, color, textStyle..)
+            implementation(compose.components.resources) // шрифты и строки
+//            implementation(libs.koin.core)
+            implementation(libs.lifecycle.viewmodel.compose)
 
-                implementation(compose.runtime)
-                implementation(compose.foundation)
-                implementation(compose.material3)
-                implementation(compose.ui)
-                implementation(compose.components.resources)
-                implementation(compose.components.uiToolingPreview)
-                implementation(libs.androidx.runtime)
-                implementation(libs.androidx.lifecycle.viewmodel)
-                implementation(libs.androidx.lifecycle.runtime.compose)
-                implementation(libs.lifecycle.runtime.compose)
+            //Ktor
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.serialization.kotlinx.json)
+        }
+        wasmJsMain.dependencies {
+            //Ktor client
+            implementation("io.ktor:ktor-client-js:3.1.3")
+            implementation("org.jetbrains.skiko:skiko-js-wasm-runtime:0.9.4.2")
+//            implementation(libs.html.core)
 
-            }
         }
     }
 }
