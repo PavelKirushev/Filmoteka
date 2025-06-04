@@ -20,14 +20,9 @@ class FilmApiImpl(private val apiKey: String) : FilmApi {
     }
 
     override suspend fun getFilmById(filmId: Int): Film {
-        try {
-            return client.get {
-                url("https://kinopoiskapiunofficial.tech/api/v2.2/films/$filmId")
-                header("X-API-KEY", apiKey)
-            }.body()
-        } catch (e: Exception) {
-            throw IOException("Не удалось загрузить данные")
-        }
-
+        return client.get {
+            url("https://kinopoiskapiunofficial.tech/api/v2.2/films/$filmId")
+            header("X-API-KEY", apiKey)
+        }.body()
     }
 }

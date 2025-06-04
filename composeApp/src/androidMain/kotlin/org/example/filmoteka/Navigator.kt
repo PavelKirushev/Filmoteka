@@ -1,6 +1,8 @@
 package org.example.filmoteka
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -22,9 +24,17 @@ fun Navigator(searchViewModel: SearchViewModel,
     NavHost(navController = controller, startDestination = "authScreen") {
         composable("searchScreen") { MainSearchScreen(searchViewModel, controller) }
         composable("details/{filmId}") {
-            val filmId = it.arguments?.getString("filmId")?.toIntOrNull()
+            val filmId = it.arguments?.getString("filmId")
             if (filmId != null) {
-                FilmScreen(filmViewModel, filmId, controller)
+                filmViewModel.loadFilm(filmId)
+                val filmViewState by filmViewModel.filmStateFlow.collectAsState()
+                val isRefreshing by filmViewModel.isRefreshing.collectAsState()
+
+                FilmScreen(
+                    filmViewState = filmViewState,
+                    isRefreshing = isRefreshing,
+                    onRefresh = { filmViewModel.refreshFilm() }
+                )
             }
         }
         composable("authScreen") {

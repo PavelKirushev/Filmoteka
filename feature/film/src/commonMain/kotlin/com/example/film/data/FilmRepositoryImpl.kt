@@ -11,11 +11,6 @@ class FilmRepositoryImpl(
     private val filmApi: FilmApi
 ) : FilmRepository {
     override suspend fun getFilm(filmId: Int): FilmDetails {
-        try {
-            return filmApi.getFilmById(filmId).toFilmDetails()
-        } catch (e: Exception) {
-            throw IOException(e.message)
-        }
-
+        return filmApi.getFilmById(filmId).toFilmDetails()
     }
 }
