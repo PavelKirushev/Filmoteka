@@ -2,6 +2,7 @@ package com.example.search.domain
 
 import com.example.search.Countries
 import com.example.search.Genres
+import kotlinx.serialization.Serializable
 
 data class FilmDetails(
     val filmId: Int?,

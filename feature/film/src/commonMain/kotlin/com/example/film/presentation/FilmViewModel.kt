@@ -32,7 +32,7 @@ class FilmViewModel(val filmRepository: FilmRepository): ViewModel() {
         }
     }
 
-    fun applyAction(action: FilmAction, state: FilmState): FilmState {
+    private fun applyAction(action: FilmAction, state: FilmState): FilmState {
         return when(action) {
             FilmAction.Init -> state.copy(isLoading = true)
             FilmAction.Retry -> state.copy(isLoading = true)

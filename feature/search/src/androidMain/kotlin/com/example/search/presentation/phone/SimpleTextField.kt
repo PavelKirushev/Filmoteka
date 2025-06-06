@@ -17,7 +17,6 @@ import androidx.compose.ui.text.input.ImeAction
 @Composable
 fun SimpleTextField(
     onValueChange: (String) -> Unit,
-    keyboardActions: KeyboardActions,
     modifier: Modifier
 ) {
     val textState = remember { mutableStateOf("") }
@@ -31,8 +30,6 @@ fun SimpleTextField(
         modifier = modifier,
         textStyle = MaterialTheme.typography.bodyLarge.copy(MaterialTheme.colorScheme.primary),
         singleLine = true,
-        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-        keyboardActions = keyboardActions,
         cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
         decorationBox = {innerTextField ->
             Box(

@@ -3,7 +3,6 @@ import kotlinx.serialization.*
 
 @Serializable
 data class Film (
-
     @SerialName("kinopoiskId"                ) var kinopoiskId                : Int?                 = null,
     @SerialName("kinopoiskHDId"              ) var kinopoiskHDId              : String?              = null,
     @SerialName("imdbId"                     ) var imdbId                     : String?              = null,

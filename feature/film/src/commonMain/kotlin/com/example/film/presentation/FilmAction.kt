@@ -1,6 +1,6 @@
 package com.example.film.presentation
 
-import com.example.film.domain.FilmDetails
+import com.example.film.domain.models.FilmDetails
 
 sealed interface FilmAction {
     data object Init : FilmAction                                         // Инициализация экрана/фичи

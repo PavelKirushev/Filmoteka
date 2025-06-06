@@ -1,6 +1,8 @@
 package com.example.search.data.network
 
 import com.example.search.SearchResults
+import com.example.search.data.network.models.Collections
+import com.example.search.domain.FilmDetails
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.android.Android
@@ -19,11 +21,19 @@ class SearchApiImpl(private val apiKey: String) : SearchApi {
         }
     }
 
-    override suspend fun getSearchResult(keyword: String, page: Int): SearchResults {
+    override suspend fun searchFilms(keyword: String, page: Int): SearchResults {
         return client.get {
             url("https://kinopoiskapiunofficial.tech/api/v2.1/films/search-by-keyword")
             header("X-API-KEY", apiKey)
             parameter("keyword", keyword)
+            parameter("page", page)
+        }.body()
+    }
+
+    override suspend fun getFilms(page: Int): Collections {
+        return client.get {
+            url("https://kinopoiskapiunofficial.tech/api/v2.2/films/collections")
+            header("X-API-KEY", apiKey)
             parameter("page", page)
         }.body()
     }

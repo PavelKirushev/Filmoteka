@@ -1,6 +1,7 @@
 package com.example.search.data.mappers
 
 import com.example.search.SearchResults
+import com.example.search.data.network.models.Collections
 import com.example.search.domain.FilmDetails
 import com.example.search.domain.SearchDetails
 

@@ -1,5 +1,6 @@
 package com.example.film.presentation.phone
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,6 +13,10 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -40,7 +45,6 @@ fun FilmScreen(
         is FilmViewState.Film -> {
             val film = filmViewState.film
             val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = isRefreshing)
-
             SwipeRefresh(
                 state = swipeRefreshState,
                 onRefresh = onRefresh,
@@ -58,7 +62,7 @@ fun FilmScreen(
                             contentDescription = "Movie Poster",
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .aspectRatio(2f / 3f) // Киноафиша обычно 2:3
+                                .aspectRatio(2f / 3f)
                                 .clip(MaterialTheme.shapes.medium)
                                 .shadow(8.dp, MaterialTheme.shapes.medium),
                             contentScale = ContentScale.Crop,
@@ -114,6 +118,16 @@ fun FilmScreen(
                             color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.9f),
                             modifier = Modifier.padding(bottom = 24.dp)
                         )
+                    }
+                    if (film.videos.isNotEmpty()) {
+                        item {
+                            YouTubeVideoPlayer(
+                                videoUrl = film.videos[0].url,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .aspectRatio(16f / 9f)
+                            )
+                        }
                     }
                 }
             }

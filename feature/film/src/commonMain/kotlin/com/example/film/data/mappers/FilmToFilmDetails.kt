@@ -1,9 +1,12 @@
 package com.example.film.data.mappers
 
-import com.example.film.domain.FilmDetails
+import com.example.film.domain.models.FilmDetails
 import com.example.film.data.network.models.Film
+import com.example.film.data.network.models.FilmVideos
 
-fun Film.toFilmDetails() : FilmDetails {
+fun Film.toFilmDetails(
+    videos: FilmVideos
+) : FilmDetails {
     return FilmDetails(
         id = this.kinopoiskId,
         nameRu = this.nameRu,
@@ -15,5 +18,6 @@ fun Film.toFilmDetails() : FilmDetails {
         countries = this.countries,
         genres = this.genres,
         ratingKinopoiskVoteCount = this.ratingKinopoiskVoteCount,
+        videos = videos.items
     )
 }

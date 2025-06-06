@@ -1,6 +1,5 @@
 package com.example.search.presentation.phone
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -59,7 +58,6 @@ fun FilmCard(film: FilmDetails, controller: NavHostController) {
                     text = "${film.nameRu ?: "Без названия"} (${film.year ?: "год не указан"})",
                 )
                 if (film.rating.toString() != "null") {
-                    Log.d("rating", film.rating.toString())
                     Text(
                         text = "Рейтинг: ${film.rating} (${film.ratingVoteCount ?: 0} оценок)",
                         style = MaterialTheme.typography.bodyMedium.copy(MaterialTheme.colorScheme.onTertiaryContainer)

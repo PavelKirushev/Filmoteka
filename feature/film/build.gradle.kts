@@ -64,6 +64,9 @@ kotlin {
 
             implementation(libs.accompanist.swiperefresh)
 
+            //Exo Player
+            implementation("com.pierfrancescosoffritti.androidyoutubeplayer:core:11.1.0")
+
             implementation(project(":ui-core"))
         }
 
@@ -82,7 +85,7 @@ kotlin {
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
 
-//            implementation(libs.kotlinx.serialization.json)
+
         }
         wasmJsMain.dependencies {
             //Ktor client

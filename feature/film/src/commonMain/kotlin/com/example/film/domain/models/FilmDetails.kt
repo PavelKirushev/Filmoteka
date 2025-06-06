@@ -1,6 +1,7 @@
-package com.example.film.domain
+package com.example.film.domain.models
 
 import com.example.film.data.network.models.Countries
+import com.example.film.data.network.models.FilmVideoItem
 import com.example.film.data.network.models.Genres
 
 data class FilmDetails(
@@ -14,4 +15,5 @@ data class FilmDetails(
     val description: String?,
     val countries: List<Countries>,
     val genres: List<Genres>,
+    val videos: List<FilmVideoItem>
 )
