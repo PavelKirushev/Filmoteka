@@ -91,15 +91,18 @@ class SearchViewModel(private val searchRepository: SearchRepository): ViewModel
         viewModelScope.launch {
             try {
                 val films = withContext(Dispatchers.Default) {
-//                    if (query.isBlank()) {
-//                        searchRepository.getFilms(pageToLoad)
-//                    } else {
-//                        searchRepository.searchFilms(query, pageToLoad)
-//                    }
-                    searchRepository.searchFilms(query, pageToLoad)
+                    if (query.isBlank()) {
+                        println("Loading films with page: $pageToLoad")
+                        searchRepository.getFilms(pageToLoad)
+                    } else {
+                        println("Searching films with query: $query, page: $pageToLoad")
+                        searchRepository.searchFilms(query, pageToLoad)
+                    }
                 }
+                println("Loaded ${films.films.size} films")
                 submitAction(SearchAction.FilmsLoaded(films.films, isLoadMore))
             } catch (e: Exception) {
+                println("Error loading films: ${e.message}")
                 submitAction(SearchAction.LoadError(e.message ?: "FATAL"))
             }
         }

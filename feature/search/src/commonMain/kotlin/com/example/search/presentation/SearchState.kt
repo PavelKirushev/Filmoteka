@@ -1,8 +1,6 @@
 package com.example.search.presentation
 
-import com.example.search.data.network.models.Item
 import com.example.search.domain.FilmDetails
-import com.example.search.domain.SearchDetails
 
 data class SearchState (
     val query: String = "",
