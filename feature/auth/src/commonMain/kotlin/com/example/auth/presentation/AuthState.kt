@@ -11,6 +11,7 @@ data class AuthState(
     val loginForm: UserInfo? = null,
     val registerForm: User? = null,
 
+    val isLogged: Boolean = false,
     val currentUser: User? = null,
     val error: String? = null
 )

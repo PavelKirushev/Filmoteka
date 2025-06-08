@@ -41,7 +41,7 @@ fun Navigator(searchViewModel: SearchViewModel,
             }
         }
         composable("authScreen") {
-            AuthScreen(authViewModel, themeViewModel)
+            AuthScreen(authViewModel, themeViewModel, navigateHome = { controller.navigate("homeScreen") })
         }
         composable("homeScreen") {
             HomeCategoriesScreen(homeViewModel, controller)

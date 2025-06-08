@@ -64,6 +64,7 @@ kotlin {
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
 
+            implementation("androidx.datastore:datastore-preferences:1.1.7")
             implementation(project(":ui-core"))
         }
 
@@ -81,7 +82,6 @@ kotlin {
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
-
 //            implementation(libs.kotlinx.serialization.json)
         }
 

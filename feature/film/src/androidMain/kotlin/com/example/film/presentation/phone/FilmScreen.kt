@@ -2,6 +2,7 @@ package com.example.film.presentation.phone
 
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
@@ -13,10 +14,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,10 +34,20 @@ fun FilmScreen(
 ) {
     when (filmViewState) {
         FilmViewState.Empty -> {
-            TextOnFullScreen(text = "Нет данных")
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(text = "Нет данных")
+            }
         }
         is FilmViewState.Error -> {
-            TextOnFullScreen(text = "Произошла ошибка")
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(text = filmViewState.errorText ?: "Произошла ошибка")
+            }
         }
         is FilmViewState.Film -> {
             val film = filmViewState.film
@@ -69,55 +76,52 @@ fun FilmScreen(
                         )
                     }
                     item {
-                        Text(
-                            text = film.nameRu ?: "Название недоступно",
-                            style = MaterialTheme.typography.headlineMedium,
-                            color = MaterialTheme.colorScheme.onBackground,
-                            modifier = Modifier.padding(bottom = 4.dp)
-                        )
-
-                        film.nameOriginal?.let { originalName ->
+                        Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
                             Text(
-                                text = originalName,
-                                style = MaterialTheme.typography.titleMedium,
-                                color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
-                                modifier = Modifier.padding(bottom = 12.dp)
+                                text = film.nameRu ?: "Название недоступно",
+                                style = MaterialTheme.typography.displaySmall.copy(MaterialTheme.colorScheme.onPrimaryContainer),
+                                modifier = Modifier.padding(bottom = 4.dp)
                             )
-                        }
-
-                        Row(
-                            modifier = Modifier.padding(bottom = 12.dp),
-                            horizontalArrangement = Arrangement.spacedBy(24.dp)
-                        ) {
-                            Text(
-                                text = "Рейтинг: ${film.rating ?: "—"}",
-                                style = MaterialTheme.typography.bodyLarge,
-                                color = MaterialTheme.colorScheme.primary
-                            )
-                            film.year?.let {
+                            film.nameOriginal?.let { originalName ->
                                 Text(
-                                    text = "Год: $it",
-                                    style = MaterialTheme.typography.bodyLarge,
-                                    color = MaterialTheme.colorScheme.primary
+                                    text = originalName,
+                                    style = MaterialTheme.typography.headlineSmall.copy(MaterialTheme.colorScheme.primary),
+                                    modifier = Modifier.padding(bottom = 20.dp)
                                 )
                             }
-                        }
-
-                        film.countries.takeIf { it.isNotEmpty() }?.let { countries ->
-                            Text(
-                                text = "Страны: ${film.countries.joinToString { it.country ?: "" }}",
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.onBackground,
-                                modifier = Modifier.padding(bottom = 12.dp)
-                            )
+                            Row(
+                                modifier = Modifier.padding(bottom = 12.dp).fillMaxWidth(),
+                                horizontalArrangement = Arrangement.Center,
+                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
+                                Text(
+                                    text = "Рейтинг: ${film.rating ?: "—"}",
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    color = MaterialTheme.colorScheme.tertiary
+                                )
+                                film.year?.let {
+                                    Text(
+                                        text = "Год: $it",
+                                        style = MaterialTheme.typography.bodyLarge.copy(MaterialTheme.colorScheme.primary),
+                                        color = MaterialTheme.colorScheme.tertiary
+                                    )
+                                }
+                            }
                         }
 
                         Text(
                             text = film.description ?: "Описание недоступно",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.9f),
+                            style = MaterialTheme.typography.bodyMedium.copy(MaterialTheme.colorScheme.primary),
                             modifier = Modifier.padding(bottom = 24.dp)
                         )
+
+                        film.countries.takeIf { it.isNotEmpty() }?.let {
+                            Text(
+                                text = "Страны: ${film.countries.joinToString { it.country ?: "" }}",
+                                style = MaterialTheme.typography.bodyMedium.copy(MaterialTheme.colorScheme.primary),
+                                modifier = Modifier.padding(bottom = 12.dp)
+                            )
+                        }
                     }
                     if (film.videos.isNotEmpty()) {
                         item {
@@ -133,18 +137,16 @@ fun FilmScreen(
             }
         }
         FilmViewState.Loading -> {
-            TextOnFullScreen(text = "Загрузка", showIndicator = true)
-        }
-    }
-}
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Column {
+                    CircularProgressIndicator()
+                    Text(text = "Загрузка")
+                }
 
-
-@Composable
-fun TextOnFullScreen(text: String, showIndicator: Boolean = false) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center, modifier = Modifier.fillMaxSize()) {
-        if (showIndicator) {
-            CircularProgressIndicator()
+            }
         }
-        Text(text = text, style = MaterialTheme.typography.titleMedium.copy(MaterialTheme.colorScheme.primary))
     }
 }

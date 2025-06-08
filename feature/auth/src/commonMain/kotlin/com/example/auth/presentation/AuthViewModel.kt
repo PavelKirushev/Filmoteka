@@ -21,12 +21,12 @@ class AuthViewModel(private val authRepository: AuthRepository): ViewModel() {
         mutableAuthStateFlow.value = createViewState(state)
 
         when (action) {
-            AuthAction.LoginButtonClicked -> {
-                val loginForm = state.loginForm
-                if (loginForm != null) {
-                    submitSideEffect(AuthSideEffects.LoginUser(loginForm))
+            is AuthAction.LoginButtonClicked -> {
+                if (action.userInfo.login.isEmpty() || action.userInfo.password.isEmpty()) {
+                    submitAction(AuthAction.Error("Заполните все поля"))
                 } else {
-                    submitAction(AuthAction.Error("Введите логин"))
+                    val loginForm = action.userInfo
+                    submitSideEffect(AuthSideEffects.LoginUser(loginForm))
                 }
             }
             is AuthAction.RegisterButtonClicked -> {
@@ -51,10 +51,10 @@ class AuthViewModel(private val authRepository: AuthRepository): ViewModel() {
             AuthAction.HideRegisterDialog -> state.copy(showRegisterDialog = false, error = null)
             AuthAction.ShowRegisterDialog -> state.copy(showRegisterDialog = true, error = null)
 
-            AuthAction.LoginButtonClicked -> state.copy(isLoading = true, error = null)
+            is AuthAction.LoginButtonClicked -> state.copy(isLoading = true, error = null)
             is AuthAction.RegisterButtonClicked -> state.copy(registerForm = action.user, isLoading = true, error = null)
 
-            is AuthAction.LoginSuccess -> state.copy(currentUser = action.user, isLoading = false, error = null)
+            is AuthAction.LoginSuccess -> state.copy(currentUser = action.user, isLoading = false, error = null, isLogged = true)
             AuthAction.RegisterSuccess -> state.copy(isLoading = false, error = null)
         }
     }
