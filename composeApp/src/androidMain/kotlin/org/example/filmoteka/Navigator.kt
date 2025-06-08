@@ -10,6 +10,8 @@ import com.example.auth.presentation.AuthViewModel
 import com.example.auth.presentation.phone.AuthScreen
 import com.example.film.presentation.FilmViewModel
 import com.example.film.presentation.phone.FilmScreen
+import com.example.home.presentation.HomeCategoriesScreen
+import com.example.home.presentation.HomeViewModel
 import com.example.search.presentation.SearchViewModel
 import com.example.search.presentation.phone.MainSearchScreen
 import com.example.ui.ThemeViewModel
@@ -18,6 +20,7 @@ import com.example.ui.ThemeViewModel
 fun Navigator(searchViewModel: SearchViewModel,
               filmViewModel: FilmViewModel,
               authViewModel: AuthViewModel,
+              homeViewModel: HomeViewModel,
               controller: NavHostController,
               themeViewModel: ThemeViewModel
               ){
@@ -39,6 +42,9 @@ fun Navigator(searchViewModel: SearchViewModel,
         }
         composable("authScreen") {
             AuthScreen(authViewModel, themeViewModel)
+        }
+        composable("homeScreen") {
+            HomeCategoriesScreen(homeViewModel, controller)
         }
     }
 }

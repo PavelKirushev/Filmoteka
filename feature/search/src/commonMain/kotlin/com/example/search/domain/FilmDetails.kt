@@ -1,8 +1,7 @@
 package com.example.search.domain
 
-import com.example.search.Countries
-import com.example.search.Genres
-import kotlinx.serialization.Serializable
+import com.example.search.data.network.models.common.Countries
+import com.example.search.data.network.models.common.Genres
 
 data class FilmDetails(
     val filmId: Int?,

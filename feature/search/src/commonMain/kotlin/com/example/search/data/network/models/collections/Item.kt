@@ -1,16 +1,7 @@
-package com.example.search.data.network.models
-
-import com.example.search.Countries
-import com.example.search.Genres
+import com.example.search.data.network.models.common.Countries
+import com.example.search.data.network.models.common.Genres
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-
-@Serializable
-data class Collections(
-    @SerialName("total") val total: Int,
-    @SerialName("totalPages") val totalPages: Long,
-    @SerialName("items") val items: ArrayList<Item>,
-)
 
 @Serializable
 data class Item(

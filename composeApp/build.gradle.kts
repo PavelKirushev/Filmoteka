@@ -59,6 +59,7 @@ kotlin {
             implementation(project(":feature:film"))
             implementation(project(":feature:search"))
             implementation(project(":feature:auth"))
+            implementation(project(":feature:home"))
             implementation(project(":ui-core"))
         }
         wasmJsMain.dependencies {

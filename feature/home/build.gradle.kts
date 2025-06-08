@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    id("kotlinx-serialization")
 }
 
 kotlin {
@@ -20,15 +21,14 @@ kotlin {
 
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
-        moduleName = "composeApp"
+        moduleName = "search"
         browser {
             val rootDirPath = project.rootDir.path
             val projectDirPath = project.projectDir.path
             commonWebpackConfig {
-                outputFileName = "composeApp.js"
+                outputFileName = "search.js"
                 devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
                     static = (static ?: mutableListOf()).apply {
-                        // Serve sources to debug inside browser
                         add(rootDirPath)
                         add(projectDirPath)
                     }
@@ -39,39 +39,71 @@ kotlin {
     }
 
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                // Общие зависимости для всех платформ
-            }
+
+        androidMain.dependencies {
+            implementation(libs.androidx.activity.compose)
+            implementation(libs.androidx.runtime)
+            implementation(libs.androidx.lifecycle.viewmodel)
+            implementation(libs.lifecycle.runtime.compose) // жизненный цикл
+
+            //Retrofit
+            implementation(libs.retrofit)
+            implementation(libs.converter.gson)
+
+            //Coil
+            implementation(libs.coil.compose)
+            implementation(libs.coil.network.okhttp)
+
+            //Koin
+            implementation(libs.koin.android)
+
+            //Ktor client
+            implementation(libs.ktor.client.android)
+            implementation(libs.ktor.client.content.negotiation)
+
+            implementation(project(":ui-core"))
         }
 
-        val androidMain by getting {
-            dependencies {
-                implementation(libs.androidx.core.ktx.v1120)
-                implementation(libs.androidx.ui) // Замените на актуальную версию
-//                implementation(libs.material3) // Замените на актуальную версию
-                implementation(libs.androidx.ui.tooling.preview) // Замените на актуальную версию
-                implementation(libs.androidx.activity.compose.v160) // Замените на актуальную версию
-            }
+        commonMain.dependencies {
+            implementation(libs.navigation.compose) // навигация
+            implementation(compose.runtime) // реактивность и управление состоянием (remember, mutableStateOf)
+            implementation(compose.foundation) // базовый UI
+            implementation(compose.material3) // готовые UI компоненты (Button, Card...)
+            implementation(compose.ui) // ядро компоуса для работы с графикой и вводом (dp, color, textStyle..)
+            implementation(compose.components.resources) // шрифты и строки
+//            implementation(libs.koin.core)
+            implementation(libs.lifecycle.viewmodel.compose)
+
+            //Ktor
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.serialization.kotlinx.json)
+            implementation(project(":feature:film"))
+        }
+        wasmJsMain.dependencies {
+            //Ktor client
+            implementation("io.ktor:ktor-client-js:3.1.3")
+            implementation("org.jetbrains.skiko:skiko-js-wasm-runtime:0.9.4.2")
+//            implementation(libs.html.core)
+
         }
     }
 }
 
 android {
-    namespace = "com.example.home"
-    compileSdk = libs.versions.android.compileSdk.get().toInt() // Укажите вашу версию compileSdk
+    namespace = "com.example.search"
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = libs.versions.android.minSdk.get().toInt() // Укажите минимальную версию SDK
-        targetSdk = libs.versions.android.targetSdk.get().toInt() // Укажите целевую версию SDK
+//        applicationId = "org.example.filmoteka"
+        minSdk = libs.versions.android.minSdk.get().toInt()
+        targetSdk = libs.versions.android.targetSdk.get().toInt()
+//        versionCode = 1
+//        versionName = "1.0"
     }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-}
-
-dependencies {
-    implementation(project(":ui-core"))
 }

@@ -1,13 +1,9 @@
 package com.example.search.data.mappers
 
-import com.example.search.Countries
-import com.example.search.Genres
-import com.example.search.SearchResults
-import com.example.search.data.network.models.Collections
+import com.example.search.data.network.models.films.SearchResults
+import com.example.search.data.network.models.collections.Collections
 import com.example.search.domain.FilmDetails
 import com.example.search.domain.SearchDetails
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 
 fun SearchResults.toSearchDetails(): SearchDetails {
     return SearchDetails(

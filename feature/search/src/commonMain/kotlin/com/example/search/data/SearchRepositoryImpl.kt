@@ -2,7 +2,6 @@ package com.example.search.data
 
 import com.example.search.data.mappers.toSearchDetails
 import com.example.search.data.network.SearchApi
-import com.example.search.data.network.models.Collections
 import com.example.search.domain.SearchDetails
 import com.example.search.domain.SearchRepository
 

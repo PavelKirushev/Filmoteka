@@ -78,6 +78,7 @@ kotlin {
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
+            implementation(project(":feature:film"))
         }
         wasmJsMain.dependencies {
             //Ktor client
@@ -105,10 +106,4 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-}
-dependencies {
-    implementation(libs.androidx.activity)
-    implementation(libs.androidx.material3.android)
-    implementation(project(":feature:film"))
-    implementation(project(":ui-core"))
 }

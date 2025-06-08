@@ -1,6 +1,5 @@
 package com.example.search.presentation
 
-import com.example.search.data.network.models.Item
 import com.example.search.domain.FilmDetails
 
 sealed interface SearchAction {

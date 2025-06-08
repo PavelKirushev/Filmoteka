@@ -20,13 +20,15 @@ import com.example.compose.AppTheme
 import com.example.film.data.FilmRepositoryImpl
 import com.example.film.data.network.FilmApiProvider
 import com.example.film.presentation.FilmViewModel
+import com.example.home.data.HomeRepositoryImpl
+import com.example.home.data.network.HomeApiProvider
+import com.example.home.presentation.HomeViewModel
 import com.example.search.data.SearchRepositoryImpl
 import com.example.search.data.network.SearchApiProvider
 import com.example.search.presentation.SearchViewModel
 import com.example.ui.ThemeViewModel
 import org.example.filmoteka.phone.BottomNavigationBar
 import org.example.filmoteka.phone.SetSystemBarsColor
-import org.jetbrains.compose.resources.getString
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +54,7 @@ fun Main(themeViewModel: ThemeViewModel, context: Context) {
     val filmViewModel = FilmViewModel(FilmRepositoryImpl(FilmApiProvider.create(apiKey)))
     val searchViewModel = SearchViewModel(SearchRepositoryImpl(SearchApiProvider.create(apiKey)))
     val authViewModel = AuthViewModel(AuthRepositoryImpl(AuthApiProvider.create()))
-
+    val homeViewModel = HomeViewModel(HomeRepositoryImpl(HomeApiProvider.create(apiKey)))
 
     val controller = rememberNavController()
     Column (
@@ -65,6 +67,7 @@ fun Main(themeViewModel: ThemeViewModel, context: Context) {
                 searchViewModel = searchViewModel,
                 filmViewModel = filmViewModel,
                 authViewModel = authViewModel,
+                homeViewModel = homeViewModel,
                 controller = controller,
                 themeViewModel = themeViewModel
             )

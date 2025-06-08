@@ -1,4 +1,4 @@
-package com.example.search
+package com.example.example
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

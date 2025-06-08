@@ -1,7 +1,6 @@
-package com.example.search.data.network
+package com.example.home.data.network
 
-import com.example.search.data.network.models.films.SearchResults
-import com.example.search.data.network.models.collections.Collections
+import com.example.example.CollectionsResult
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.android.Android
@@ -13,27 +12,21 @@ import io.ktor.client.request.url
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
-class SearchApiImpl(private val apiKey: String) : SearchApi {
+class HomeApiImpl(private val apiKey: String) : com.example.home.data.network.HomeApi {
+
     private val client = HttpClient(Android) {
         install(ContentNegotiation) {
             json(Json { ignoreUnknownKeys = true })
         }
     }
 
-    override suspend fun searchFilms(keyword: String, page: Int): SearchResults {
+    override suspend fun getCollections(type: String, page: Int): CollectionsResult {
         return client.get {
-            url("https://kinopoiskapiunofficial.tech/api/v2.1/films/search-by-keyword")
+            url("https://kinopoiskapiunofficial.tech/api/v2.2/films/collections")
             header("X-API-KEY", apiKey)
-            parameter("keyword", keyword)
+            parameter("type", type)
             parameter("page", page)
         }.body()
     }
 
-    override suspend fun getFilms(page: Int): Collections {
-        return client.get {
-            url("https://kinopoiskapiunofficial.tech/api/v2.2/films/collections")
-            header("X-API-KEY", apiKey)
-            parameter("page", page)
-        }.body()
-    }
 }
