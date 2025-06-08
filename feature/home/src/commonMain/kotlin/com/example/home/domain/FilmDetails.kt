@@ -1,8 +1,5 @@
 package com.example.home.domain
 
-import com.example.example.Countries
-import com.example.example.Genres
-
 data class FilmDetails(
     val id: Int?,
     val nameRu: String?,

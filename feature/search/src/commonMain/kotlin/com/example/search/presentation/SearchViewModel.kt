@@ -24,10 +24,9 @@ class SearchViewModel(private val searchRepository: SearchRepository): ViewModel
         when (action) {
             SearchAction.Init -> submitSideEffect(SearchSideEffects.LoadFilms(state.query, state.page, false))
             is SearchAction.QueryChanged -> submitSideEffect(SearchSideEffects.LoadFilms(action.query, 0, false))
-            SearchAction.LoadMore -> {
-                state = state.copy(isLoadingMore = true)
+            is SearchAction.LoadMore -> {
+                state = state.copy(isLoadingMore = true, page = state.page + 1)
                 submitSideEffect(SearchSideEffects.LoadFilms(state.query, state.page, true))
-                state.page++
             }
             is SearchAction.FilmsLoaded,
             is SearchAction.LoadError -> Unit
@@ -75,7 +74,8 @@ class SearchViewModel(private val searchRepository: SearchRepository): ViewModel
             else -> SearchViewState.List(
                 items = state.items,
                 isLoadingMore = state.isLoadingMore,
-                canLoadMore = state.canLoadMore
+                canLoadMore = state.canLoadMore,
+                query = state.query
             )
         }
     }
@@ -92,17 +92,13 @@ class SearchViewModel(private val searchRepository: SearchRepository): ViewModel
             try {
                 val films = withContext(Dispatchers.Default) {
                     if (query.isBlank()) {
-                        println("Loading films with page: $pageToLoad")
                         searchRepository.getFilms(pageToLoad)
                     } else {
-                        println("Searching films with query: $query, page: $pageToLoad")
                         searchRepository.searchFilms(query, pageToLoad)
                     }
                 }
-                println("Loaded ${films.films.size} films")
                 submitAction(SearchAction.FilmsLoaded(films.films, isLoadMore))
             } catch (e: Exception) {
-                println("Error loading films: ${e.message}")
                 submitAction(SearchAction.LoadError(e.message ?: "FATAL"))
             }
         }

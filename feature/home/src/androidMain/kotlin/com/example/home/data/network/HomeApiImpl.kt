@@ -12,7 +12,7 @@ import io.ktor.client.request.url
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
-class HomeApiImpl(private val apiKey: String) : com.example.home.data.network.HomeApi {
+class HomeApiImpl(private val apiKey: String) : HomeApi {
 
     private val client = HttpClient(Android) {
         install(ContentNegotiation) {

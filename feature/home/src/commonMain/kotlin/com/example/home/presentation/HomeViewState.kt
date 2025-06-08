@@ -12,9 +12,11 @@ sealed class HomeViewState {
 
 
 data class CategoryDisplayItem(
-    val title: String,
+    val display: String,
+    val query: String,
     val films: List<FilmDetails>,
     val isLoading: Boolean = false,
+    val canLoadMore: Boolean = true,
     val page: Int = 1,
     val error: String? = null
 )

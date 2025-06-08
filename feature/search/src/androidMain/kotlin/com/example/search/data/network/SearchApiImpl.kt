@@ -1,7 +1,7 @@
 package com.example.search.data.network
 
-import com.example.search.data.network.models.films.SearchResults
 import com.example.search.data.network.models.collections.Collections
+import com.example.search.data.network.models.films.SearchResults
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.android.Android

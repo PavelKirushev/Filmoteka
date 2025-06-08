@@ -13,8 +13,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import com.example.auth.data.network.AuthApiProvider
 import com.example.auth.data.AuthRepositoryImpl
+import com.example.auth.data.network.AuthApiProvider
 import com.example.auth.presentation.AuthViewModel
 import com.example.compose.AppTheme
 import com.example.film.data.FilmRepositoryImpl

@@ -8,6 +8,7 @@ sealed class SearchViewState {
     data class List(
         val items: kotlin.collections.List<FilmDetails>,
         val isLoadingMore: Boolean = false,
-        val canLoadMore: Boolean = true
+        val canLoadMore: Boolean = true,
+        val query: String = ""
     ) : SearchViewState()
 }

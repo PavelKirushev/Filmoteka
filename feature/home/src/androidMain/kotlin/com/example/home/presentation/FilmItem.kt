@@ -1,6 +1,5 @@
 package com.example.home.presentation
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,7 +16,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -29,7 +27,7 @@ import com.example.home.domain.FilmDetails
 fun FilmItem(film: FilmDetails, controller: NavController) {
     Surface(
         shape = RoundedCornerShape(8.dp),
-        color = MaterialTheme.colorScheme.onTertiaryContainer,
+        color = MaterialTheme.colorScheme.primaryContainer,
         modifier = Modifier
             .width(120.dp)
             .clickable {
@@ -55,7 +53,7 @@ fun FilmItem(film: FilmDetails, controller: NavController) {
             Text(
                 modifier = Modifier.padding(8.dp),
                 text = film.nameRu ?: "Unknown",
-                style = MaterialTheme.typography.bodyMedium.copy(MaterialTheme.colorScheme.tertiaryContainer),
+                style = MaterialTheme.typography.bodyMedium.copy(MaterialTheme.colorScheme.onPrimaryContainer),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )

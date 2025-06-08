@@ -48,16 +48,19 @@ fun HomeCategoriesScreen(viewModel: HomeViewModel, controller: NavController) {
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(8.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
                 item {
                     Text(
                         text = "Главное",
-                        style = MaterialTheme.typography.displayMedium.copy(MaterialTheme.colorScheme.tertiary),
-                        modifier = Modifier.padding(8.dp    ))
+                        style = MaterialTheme.typography.displayMedium.copy(MaterialTheme.colorScheme.onPrimaryContainer),
+                        modifier = Modifier.padding(8.dp)
+                    )
                 }
                 items(state.items) { category ->
-                    Category(category, controller)
+                    Category(category, controller, onLoadMore = {
+                        viewModel.submitAction(HomeAction.LoadCategoryMore(category.query))
+                    })
                 }
             }
         }

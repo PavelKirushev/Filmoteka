@@ -10,9 +10,9 @@ data class HomeState(
 
 data class CategoryState(
     val query: String,
-    val title: String,
     val films: List<FilmDetails>,
     val isLoading: Boolean = false,
     val page: Int = 1,
+    val canLoadMore: Boolean = true,
     val error: String? = null
 )

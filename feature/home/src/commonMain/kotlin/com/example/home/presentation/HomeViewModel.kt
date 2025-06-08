@@ -26,6 +26,17 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
                     submitSideEffect(HomeSideEffects.LoadCategory(key.name, 1))
                 }
             }
+            is HomeAction.LoadCategoryMore -> {
+                val category = state.categories.find { it.query == action.query }
+                if (category != null) {
+                    val newPage = category.page + 1
+                    val updatedCategories = state.categories.map {
+                        if (it.query == action.query) it.copy(page = newPage, isLoading = true) else it
+                    }
+                    state = state.copy(categories = updatedCategories)
+                    submitSideEffect(HomeSideEffects.LoadCategory(action.query, newPage))
+                }
+            }
             is HomeAction.LoadCategorySuccess,
             is HomeAction.LoadError -> Unit
         }
@@ -34,18 +45,28 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
     private fun applyAction(action: HomeAction, state: HomeState): HomeState {
         return when (action) {
             is HomeAction.LoadCategories -> {
-                val categories = CategoryKeys.values().map { key ->
-                    CategoryState(query = key.name, title = key.displayItem, films = emptyList(), isLoading = true, page = 1)
+                val categories = CategoryKeys.entries.map { key ->
+                    CategoryState(query = key.name, films = emptyList(), isLoading = true, page = 1)
                 }
                 state.copy(categories = categories, isLoading = true, error = null)
+            }
+            is HomeAction.LoadCategoryMore -> {
+                val updatedCategories = state.categories.map { category ->
+                    if (category.query == action.query && category.canLoadMore) {
+                        category.copy(isLoading = true)
+                    } else {
+                        category
+                    }
+                }
+                state.copy(categories = updatedCategories)
             }
             is HomeAction.LoadCategorySuccess -> {
                 val updatedCategories = state.categories.map { category ->
                     if (category.query == action.query) {
                         category.copy(
-                            films = action.films,
+                            films = category.films + action.films,
                             isLoading = false,
-                            error = null
+                            page = category.page + 1
                         )
                     } else {
                         category
@@ -62,11 +83,12 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
     private fun createViewState(state: HomeState): HomeViewState {
         val items = state.categories.map { category ->
             CategoryDisplayItem(
-                title = category.title,
+                query = category.query,
                 films = category.films,
                 isLoading = category.isLoading,
                 page = category.page,
-                error = category.error
+                error = category.error,
+                display = CategoryKeys.valueOf(category.query).displayItem
             )
         }
         return HomeViewState.List(items)
