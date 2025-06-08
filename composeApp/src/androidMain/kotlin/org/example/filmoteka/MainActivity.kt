@@ -10,8 +10,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import com.example.auth.data.AuthRepositoryImpl
 import com.example.auth.data.network.AuthApiProvider
@@ -34,15 +36,14 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val themeViewModel = ThemeViewModel()
-        val isDarkTheme by themeViewModel.isDarkTheme
+        setContent {
+            val themeViewModel: ThemeViewModel = viewModel()
+            val isDarkTheme by themeViewModel.isDarkTheme.collectAsState()
 
-        setContent{
-            AppTheme (darkTheme = isDarkTheme) {
+            AppTheme(darkTheme = isDarkTheme) {
                 SetSystemBarsColor(isDarkTheme)
                 Main(themeViewModel, this)
             }
-
         }
     }
 }
