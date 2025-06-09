@@ -9,6 +9,9 @@ sealed class AuthViewState {
     data object ShowRegisterDialog : AuthViewState()
     data object HideRegisterDialog : AuthViewState()
 
+    data object ShowSettingsDialog : AuthViewState()
+    data object HideSettingsDialog : AuthViewState()
+
     data class Error(val message: String) : AuthViewState()
     data class Success(val user: User) : AuthViewState()
 }

@@ -36,6 +36,8 @@ class AuthViewModel(private val authRepository: AuthRepository): ViewModel() {
                     submitAction(AuthAction.Error("Заполните все поля"))
                 }
             }
+            AuthAction.HideSettingsDialog,
+            AuthAction.ShowSettingsDialog,
             AuthAction.HideRegisterDialog,
             AuthAction.ShowRegisterDialog,
             AuthAction.RegisterSuccess,
@@ -50,6 +52,9 @@ class AuthViewModel(private val authRepository: AuthRepository): ViewModel() {
             AuthAction.HideRegisterDialog -> state.copy(showRegisterDialog = false, error = null)
             AuthAction.ShowRegisterDialog -> state.copy(showRegisterDialog = true, error = null)
 
+            AuthAction.HideSettingsDialog -> state.copy(showSettingsDialog = false, error = null)
+            AuthAction.ShowSettingsDialog -> state.copy(showSettingsDialog = true, error = null)
+
             is AuthAction.LoginButtonClicked -> state.copy(isLoading = true, error = null)
             is AuthAction.RegisterButtonClicked -> state.copy(registerForm = action.user, isLoading = true, error = null)
 
@@ -60,14 +65,13 @@ class AuthViewModel(private val authRepository: AuthRepository): ViewModel() {
 
     private fun createViewState(state: AuthState): AuthViewState {
         return when {
-            state.currentUser != null -> {
-                println(state.currentUser)
-                AuthViewState.Success(state.currentUser)
-            }
+            state.currentUser != null -> AuthViewState.Success(state.currentUser)
             state.isLoading -> AuthViewState.Loading
             !state.error.isNullOrBlank() -> AuthViewState.Error(state.error)
-            !state.showRegisterDialog -> AuthViewState.HideRegisterDialog
             state.showRegisterDialog -> AuthViewState.ShowRegisterDialog
+            state.showSettingsDialog -> AuthViewState.ShowSettingsDialog
+            !state.showRegisterDialog -> AuthViewState.HideRegisterDialog
+            !state.showSettingsDialog -> AuthViewState.HideSettingsDialog
             else -> AuthViewState.Init
         }
     }

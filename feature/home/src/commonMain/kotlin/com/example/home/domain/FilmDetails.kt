@@ -9,6 +9,4 @@ data class FilmDetails(
     val year: Int?,
     val posterUrl: String?,
     val posterUrlPreview: String?,
-    val coverUrl: String?,
-    val logoUrl: String?,
 )

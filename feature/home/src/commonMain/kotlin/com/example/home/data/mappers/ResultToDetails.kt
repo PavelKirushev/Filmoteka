@@ -24,7 +24,5 @@ fun Items.toFilmDetails(): FilmDetails {
         year = this.year,
         posterUrl = this.posterUrl,
         posterUrlPreview = this.posterUrlPreview,
-        coverUrl = this.coverUrl,
-        logoUrl = this.logoUrl,
     )
 }

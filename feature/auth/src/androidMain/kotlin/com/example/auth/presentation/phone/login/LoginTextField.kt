@@ -1,4 +1,4 @@
-package com.example.auth.presentation.phone
+package com.example.auth.presentation.phone.login
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding

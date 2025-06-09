@@ -8,6 +8,9 @@ sealed interface AuthAction {
     data object ShowRegisterDialog : AuthAction
     data object HideRegisterDialog : AuthAction
 
+    data object ShowSettingsDialog : AuthAction
+    data object HideSettingsDialog : AuthAction
+
     data class LoginButtonClicked(val userInfo: UserInfo) : AuthAction
     data class RegisterButtonClicked(val user: User) : AuthAction
 

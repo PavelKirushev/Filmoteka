@@ -1,8 +1,10 @@
 package com.example.home.presentation
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -51,12 +53,26 @@ fun FilmItem(film: FilmDetails, controller: NavController) {
             }
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                modifier = Modifier.padding(8.dp),
+                modifier = Modifier.padding(start = 8.dp, top = 8.dp, end = 8.dp),
                 text = film.nameRu ?: "Unknown",
                 style = MaterialTheme.typography.bodyMedium.copy(MaterialTheme.colorScheme.onPrimaryContainer),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier.fillMaxWidth()) {
+                Text(
+                    text = if (film.ratingImdb != null) film.ratingImdb.toString() else film.ratingKinopoisk.toString(),
+                    style = MaterialTheme.typography.bodySmall.copy(MaterialTheme.colorScheme.tertiary),
+                    modifier = Modifier.padding(start = 8.dp, bottom = 8.dp)
+                )
+                Text(
+                    text = if (film.year != null) film.year.toString() else "",
+                    style = MaterialTheme.typography.bodySmall.copy(MaterialTheme.colorScheme.tertiary),
+                    modifier = Modifier.padding(bottom = 8.dp, end = 8.dp)
+                )
+            }
         }
     }
 }

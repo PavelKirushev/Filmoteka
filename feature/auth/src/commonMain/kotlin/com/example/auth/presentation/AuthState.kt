@@ -6,6 +6,7 @@ import com.example.auth.domain.models.UserInfo
 
 data class AuthState(
     val showRegisterDialog: Boolean = false,
+    val showSettingsDialog: Boolean = false,
     val isLoading: Boolean = false,
 
     val loginForm: UserInfo? = null,
