@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import com.example.auth.data.AuthRepositoryImpl
+import com.example.auth.data.manager.AuthManagerImpl
 import com.example.auth.data.network.AuthApiProvider
 import com.example.auth.presentation.AuthViewModel
 import com.example.compose.AppTheme
@@ -57,6 +58,7 @@ fun Main(themeViewModel: ThemeViewModel, context: Context) {
     val authViewModel = AuthViewModel(AuthRepositoryImpl(AuthApiProvider.create()))
     val homeViewModel = HomeViewModel(HomeRepositoryImpl(HomeApiProvider.create(apiKey)))
 
+    val authManager = AuthManagerImpl(context)
     val controller = rememberNavController()
     Column (
         modifier = Modifier.background(MaterialTheme.colorScheme.background)
@@ -70,9 +72,10 @@ fun Main(themeViewModel: ThemeViewModel, context: Context) {
                 authViewModel = authViewModel,
                 homeViewModel = homeViewModel,
                 controller = controller,
-                themeViewModel = themeViewModel
+                themeViewModel = themeViewModel,
+                authManager = authManager
             )
         }
-        BottomNavigationBar(controller = controller)
+        BottomNavigationBar(controller = controller, authManager = authManager)
     }
 }

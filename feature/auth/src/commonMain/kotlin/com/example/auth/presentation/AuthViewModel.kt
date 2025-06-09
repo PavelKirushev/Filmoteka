@@ -19,7 +19,6 @@ class AuthViewModel(private val authRepository: AuthRepository): ViewModel() {
     fun submitAction(action: AuthAction) {
         state = applyAction(action, state)
         mutableAuthStateFlow.value = createViewState(state)
-
         when (action) {
             is AuthAction.LoginButtonClicked -> {
                 if (action.userInfo.login.isEmpty() || action.userInfo.password.isEmpty()) {
@@ -61,11 +60,14 @@ class AuthViewModel(private val authRepository: AuthRepository): ViewModel() {
 
     private fun createViewState(state: AuthState): AuthViewState {
         return when {
+            state.currentUser != null -> {
+                println(state.currentUser)
+                AuthViewState.Success(state.currentUser)
+            }
             state.isLoading -> AuthViewState.Loading
             !state.error.isNullOrBlank() -> AuthViewState.Error(state.error)
             !state.showRegisterDialog -> AuthViewState.HideRegisterDialog
             state.showRegisterDialog -> AuthViewState.ShowRegisterDialog
-            state.currentUser != null -> AuthViewState.Success(state.currentUser)
             else -> AuthViewState.Init
         }
     }

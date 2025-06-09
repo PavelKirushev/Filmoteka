@@ -8,16 +8,21 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.auth.domain.AuthManager
 import org.example.filmoteka.models.NavBarItems
 
 @Composable
-fun BottomNavigationBar(controller: NavController) {
+fun BottomNavigationBar(controller: NavController, authManager: AuthManager) {
+    val isLoggedIn by authManager.isLoggedInFlow.collectAsState()
+
+    if (!isLoggedIn) return
     NavigationBar(modifier = Modifier.height(70.dp),
         containerColor = MaterialTheme.colorScheme.primaryContainer
     ) {
@@ -28,11 +33,16 @@ fun BottomNavigationBar(controller: NavController) {
             NavigationBarItem(
                 selected = currentRoute == navItem.route,
                 onClick = {
-                    controller.navigate(navItem.route) {
-                        popUpTo(controller.graph.findStartDestination().id) { saveState = true }
-                        launchSingleTop = true
-                        restoreState = true
+                    try {
+                        controller.navigate(navItem.route) {
+                            popUpTo(controller.graph.findStartDestination().id) { saveState = true }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    } catch (e: Exception) {
+
                     }
+
                 },
                 icon = {
                     Icon(imageVector = navItem.image,
