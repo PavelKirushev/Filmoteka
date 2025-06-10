@@ -22,17 +22,17 @@ fun SettingsRow(
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween, // <- Исправлено: SpaceEvenly → SpaceBetween
+        horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier.fillMaxWidth()
     ) {
         Text(
             text = text,
             style = MaterialTheme.typography.bodySmall.copy(MaterialTheme.colorScheme.onPrimaryContainer),
-            modifier = Modifier.weight(1f) // <- Занимает всё доступное пространство
+            modifier = Modifier.weight(1f)
         )
         Switch(
             checked = checkedState.value,
-            onCheckedChange = onCheckedChange // <- Пробрасываем изменение наружу
+            onCheckedChange = onCheckedChange
         )
     }
 }

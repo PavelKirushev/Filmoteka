@@ -20,14 +20,14 @@ import com.example.ui.ThemeViewModel
 
 @Composable
 fun SettingsDialog(authViewModel: AuthViewModel, themeViewModel: ThemeViewModel, logOut: () -> Unit) {
-    val isDarkTheme = themeViewModel.isDarkTheme.collectAsState() // Получаем текущую тему
-    val checkedState = remember { mutableStateOf(isDarkTheme.value) } // Инициализируем состояние
+    val isDarkTheme = themeViewModel.isDarkTheme.collectAsState()
+    val checkedState = remember { mutableStateOf(isDarkTheme.value) }
 
     AlertDialog(
         onDismissRequest = { authViewModel.submitAction(AuthAction.HideSettingsDialog) },
         confirmButton = {
             Button(
-                onClick = { authViewModel.submitAction(AuthAction.HideSettingsDialog) }, // <- Исправлено: HideSettingsDialog, а не HideRegisterDialog
+                onClick = { authViewModel.submitAction(AuthAction.HideSettingsDialog) },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.onPrimaryContainer,
                     contentColor = MaterialTheme.colorScheme.primaryContainer,

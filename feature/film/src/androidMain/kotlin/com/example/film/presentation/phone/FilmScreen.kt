@@ -1,6 +1,5 @@
 package com.example.film.presentation.phone
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,7 +21,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.example.film.presentation.FilmViewState
-
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
@@ -123,19 +121,10 @@ fun FilmScreen(
                             )
                         }
                     }
-                    if (film.videos.isNotEmpty()) {
-                        item {
-                            YouTubeVideoPlayer(
-                                videoUrl = film.videos[0].url,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .aspectRatio(16f / 9f)
-                            )
-                        }
-                    }
                 }
             }
         }
+
         FilmViewState.Loading -> {
             Box(
                 modifier = Modifier.fillMaxSize(),
