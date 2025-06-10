@@ -1,47 +1,117 @@
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
+
 plugins {
+    alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.composeMultiplatform)
+    alias(libs.plugins.composeCompiler)
+    id("kotlinx-serialization")
+}
+
+kotlin {
+    androidTarget {
+        @OptIn(ExperimentalKotlinGradlePluginApi::class)
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_11)
+        }
+    }
+
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
+        moduleName = "film"
+        browser {
+            val rootDirPath = project.rootDir.path
+            val projectDirPath = project.projectDir.path
+            commonWebpackConfig {
+                outputFileName = "film.js"
+                devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
+                    static = (static ?: mutableListOf()).apply {
+                        add(rootDirPath)
+                        add(projectDirPath)
+                    }
+                }
+            }
+        }
+        binaries.executable()
+    }
+
+    sourceSets {
+
+        androidMain.dependencies {
+            implementation(libs.androidx.activity.compose)
+            implementation(libs.androidx.runtime)
+            implementation(libs.androidx.lifecycle.viewmodel)
+            implementation(libs.lifecycle.runtime.compose) // жизненный цикл
+
+            //Retrofit
+            implementation(libs.retrofit)
+            implementation(libs.converter.gson)
+
+            //Coil
+            implementation(libs.coil.compose)
+            implementation(libs.coil.network.okhttp)
+
+            //Koin
+            implementation(libs.koin.android)
+
+            //Ktor client
+            implementation(libs.ktor.client.android)
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.serialization.kotlinx.json)
+
+            implementation(libs.accompanist.swiperefresh)
+
+            //Exo Player
+            implementation("com.pierfrancescosoffritti.androidyoutubeplayer:core:11.1.0")
+
+            implementation(project(":ui-core"))
+        }
+
+        commonMain.dependencies {
+            implementation(libs.navigation.compose) // навигация
+            implementation(compose.runtime) // реактивность и управление состоянием (remember, mutableStateOf)
+            implementation(compose.foundation) // базовый UI
+            implementation(compose.material3) // готовые UI компоненты (Button, Card...)
+            implementation(compose.ui) // ядро компоуса для работы с графикой и вводом (dp, color, textStyle..)
+            implementation(compose.components.resources) // шрифты и строки
+//            implementation(libs.koin.core)
+            implementation(libs.lifecycle.viewmodel.compose)
+
+            //Ktor
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.serialization.kotlinx.json)
+
+
+        }
+        wasmJsMain.dependencies {
+            //Ktor client
+            implementation("io.ktor:ktor-client-js:3.1.3")
+            implementation("org.jetbrains.skiko:skiko-js-wasm-runtime:0.9.4.2")
+//            implementation(libs.html.core)
+
+        }
+    }
 }
 
 android {
     namespace = "com.example.film"
-    compileSdk = 34
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = 24
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
+        minSdk = libs.versions.android.minSdk.get().toInt()
+        targetSdk = libs.versions.android.targetSdk.get().toInt()
     }
 
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-    kotlinOptions {
-        jvmTarget = "11"
-    }
 }
-
 dependencies {
-
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.test.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-
-    // Retrofit
-    implementation(libs.retrofit)
-    implementation(libs.converter.gson)
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.ui)
 }
