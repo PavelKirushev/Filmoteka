@@ -59,6 +59,7 @@
 
 # Stack
 
+- Kotlin Multiplatform
 - Clean Architecture
 - Multi Module
 - MVI
